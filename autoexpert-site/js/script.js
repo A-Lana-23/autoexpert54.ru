@@ -5,7 +5,6 @@ const mobileMenu = document.querySelector('.mobile-menu');
 if (mobileMenuToggle && mobileMenu) {
     mobileMenuToggle.addEventListener('click', () => {
         mobileMenu.classList.toggle('active');
-        // Анимация гамбургера
         mobileMenuToggle.classList.toggle('active');
     });
 }
@@ -19,13 +18,13 @@ mobileLinks.forEach(link => {
     });
 });
 
-// Плавная прокрутка для навигации
+// Плавная прокрутка
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            const offsetTop = target.offsetTop - 80; // Учитываем высоту шапки
+            const offsetTop = target.offsetTop - 80;
             window.scrollTo({
                 top: offsetTop,
                 behavior: 'smooth'
@@ -69,23 +68,6 @@ ctaButtons.forEach(button => {
     });
 });
 
-// Анимация гамбургера
-if (mobileMenuToggle) {
-    mobileMenuToggle.addEventListener('click', () => {
-        mobileMenuToggle.classList.toggle('active');
-    });
-}
-
-// Закрытие меню при клике вне его области
-document.addEventListener('click', (e) => {
-    if (mobileMenu && mobileMenuToggle) {
-        if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-            mobileMenu.classList.remove('active');
-            mobileMenuToggle.classList.remove('active');
-        }
-    }
-});
-
 // Изменение шапки при скролле
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
@@ -96,41 +78,4 @@ window.addEventListener('scroll', () => {
         header.style.background = 'rgba(15, 23, 42, 0.95)';
         header.style.boxShadow = 'none';
     }
-});
-
-// Адаптивные видео (если добавите реальное видео)
-function resizeVideo() {
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        
-        // Адаптация фона под размер экрана
-        if (windowWidth < 768) {
-            hero.style.backgroundSize = 'cover';
-        } else {
-            hero.style.backgroundSize = 'cover';
-        }
-    }
-}
-
-// Вызов при загрузке и изменении размера
-window.addEventListener('load', resizeVideo);
-window.addEventListener('resize', resizeVideo);
-
-// Lazy loading для изображений
-document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('img[data-src]');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-
-    images.forEach(img => imageObserver.observe(img));
 });
